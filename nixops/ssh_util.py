@@ -50,6 +50,7 @@ class SSHMaster(object):
                '-oControlPersist=600'] \
               + (["-C"] if compress else [])
 
+        print(1, cmd + ssh_flags)
         res = subprocess.call(cmd + ssh_flags, **kwargs)
         if res != 0:
             raise SSHConnectionFailed(
@@ -288,6 +289,7 @@ class SSH(object):
         cmd = ["ssh"] + master.opts + flags
         cmd.append(self._get_target(user))
         cmd += self._sanitize_command(command, allow_ssh_args)
+        print(2, cmd)
         if logged:
             try:
                 return nixops.util.logged_exec(cmd, self._logger, **kwargs)
