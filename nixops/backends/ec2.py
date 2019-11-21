@@ -317,6 +317,8 @@ class EC2State(MachineState, nixops.resources.ec2_common.EC2CommonState):
         if not self._cached_instance:
             self.connect()
             try:
+                import os
+                print(os.environ.get("AWS_SESSION_TOKEN"))
                 instances = self._conn.get_only_instances([instance_id])
             except boto.exception.EC2ResponseError as e:
                 if allow_missing and e.error_code == "InvalidInstanceID.NotFound":
